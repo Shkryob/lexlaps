@@ -8,7 +8,7 @@ import sys
 
 import gphoto2 as gp
 
-def take_a_photo(id):
+def take_a_photo(id, tries=1):
     try:
         logging.basicConfig(
             format='%(levelname)s: %(name)s: %(message)s', level=logging.WARNING)
@@ -26,7 +26,8 @@ def take_a_photo(id):
         gp.check_result(gp.gp_file_save(camera_file, target))
         gp.check_result(gp.gp_camera_exit(camera))
     except:
-        take_a_photo(id)
+        if tries < 4:
+            take_a_photo(id, tries + 1)
 
 def main():
     for i in range(0, 1800):
